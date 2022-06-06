@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.bankaccount_task.R
 import com.example.bankaccount_task.databinding.FragmentUsersBinding
 import com.example.bankaccount_task.ui.viewModel.UserViewModel
 
@@ -29,11 +31,17 @@ class UserFragment : Fragment() {
         _binding = FragmentUsersBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textGallery
-        galleryViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
         return root
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        btnNav()
+    }
+
+    private fun btnNav() {
+        binding.btnAccount.setOnClickListener {
+            findNavController().navigate(R.id.accountFragment)
+        }
     }
 
     override fun onDestroyView() {
