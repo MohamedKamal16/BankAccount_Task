@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.bankaccount_task.R
 import com.example.bankaccount_task.databinding.FragmentHomeBinding
 import com.example.bankaccount_task.ui.viewModel.HomeViewModel
 
@@ -29,11 +31,21 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+      /*  homeViewModel.text.observe(viewLifecycleOwner) {
+          //  textView.text = it
+        }*/
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        btnNav()
+    }
+
+    private fun btnNav() {
+        binding.btnUser.setOnClickListener {
+            findNavController().navigate(R.id.userFragment)
+        }
     }
 
     override fun onDestroyView() {
