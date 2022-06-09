@@ -18,18 +18,14 @@ class BankOpenHelper(context: Context?) : SQLiteOpenHelper(context, DATABASE_NAM
             db.execSQL(UserAccountEntry.SQL_CREATE_TABLE)
             db.execSQL(TransferEntry.SQL_CREATE_TABLE)
             //fill table with data with simple that we do
-            val worker = DatabaseDataWorker(db)
-            worker.insertUsers()
+           DatabaseDataWorker.insertUsers()
 
-            db.execSQL(UserAccountEntry.SQL_CREATE_INDEX1)
-            db.execSQL(TransferEntry.SQL_CREATE_INDEX1)
         }
 
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-            if (oldVersion < 2) {
-                db.execSQL(UserAccountEntry.SQL_CREATE_INDEX1)
-                db.execSQL(TransferEntry.SQL_CREATE_INDEX1)
-            }
+            db.execSQL(UserAccountEntry.SQL_DROP_TABLE)
+            db.execSQL(TransferEntry.SQL_DROP_TABLE)
+            onCreate(db)
         }
 
 

@@ -1,39 +1,15 @@
 package com.example.bankaccount_task.model.local.entity
 
-class Transfer (
-    var senderAccountID: String,
-    var senderAccountName:String,
-    var TransferAmount: String,
-    var ReceiverAccountID:String,
-    var ReceiverAccountName:String
-)
-   /* constructor(
-        senderAccountID: UserAccount,
-        senderAccountName: String,
-        TransferAmount: String,
-        ReceiverAccountID: String,
-        ReceiverAccountName: String
-    ) {
-        this.senderAccountID = senderAccountID
-        this.senderAccountName = senderAccountName
-        this.TransferAmount = TransferAmount
-        this.ReceiverAccountID = ReceiverAccountID
-        this.ReceiverAccountName = ReceiverAccountName
-    }
+class Transfer(
+    val id: String,
+    val senderAccountID: String,
+    val senderAccountName: String,
+    val ReceiverAccountID: String,
+    val ReceiverAccountName: String,
+    val TransferAmount: Int
 
-    constructor(
-        Id: Int,
-        senderAccountID: UserAccount,
-        senderAccountName: String,
-        TransferAmount: String,
-        ReceiverAccountID: String,
-        ReceiverAccountName: String
     ) {
-        this.Id = Id
-        this.senderAccountID = senderAccountID
-        this.senderAccountName = senderAccountName
-        this.TransferAmount = TransferAmount
-        this.ReceiverAccountID = ReceiverAccountID
-        this.ReceiverAccountName = ReceiverAccountName
+    override fun toString(): String {
+        return "id: $id, senderAccountID: $senderAccountID, senderAccountName: $senderAccountName,TransferAmount: $TransferAmount,ReceiverAccountID: $ReceiverAccountID,ReceiverAccountName: $ReceiverAccountName"
     }
-}*/
+}
