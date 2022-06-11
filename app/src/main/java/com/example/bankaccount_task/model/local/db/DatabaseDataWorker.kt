@@ -2,43 +2,20 @@ package com.example.bankaccount_task.model.local.db
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.bankaccount_task.model.local.db.BankDatabaseContract.TransferEntry
 import com.example.bankaccount_task.model.local.db.BankDatabaseContract.UserAccountEntry
 import com.example.bankaccount_task.model.local.entity.Transfer
 import com.example.bankaccount_task.model.local.entity.UserAccount
+import javax.inject.Inject
 
 /*
  ADD simple to db fill table with some data
  */
-object DatabaseDataWorker {
-
-    fun insertUsers() {
-        insertUser("Mohamed", "Mohamed@gmail.com", "55875937", 120000)
-        insertUser("Adnan", "Adnan@gmail.com", "543453546", 220000)
-        insertUser("Bahaa", "Bahaa@gmail.com", "235453452", 320000)
-        insertUser("Ali", "Ali@gmail.com", "345654345", 420000)
-        insertUser("Ahmed", "Ahmed@gmail.com", "786546546", 520000)
-        insertUser("Hossam", "Hossam@gmail.com", "45132563", 620000)
-        insertUser("Fady", "Fady@gmail.com", "345876543", 720000)
-        insertUser("Moataz", "Moataz@gmail.com", "1253435876", 820000)
-        insertUser("Marwan", "Marwan@gmail.com", "34567675456", 920000)
-        insertUser("Ibrahim", "Ibrahim@gmail.com", "3462856586", 150000)
-    }
+class DatabaseDataWorker @Inject constructor (var databaseHelper: BankOpenHelper) {
 
 
-    private fun insertUser(
-
-        userName: String,
-        userEmail: String,
-        userAccountId: String,
-        currentBalance: Int
-    ) {
-        val values = ContentValues()
-        values.put(UserAccountEntry.COLUMN_Account_ID, userAccountId)
-        values.put(UserAccountEntry.COLUMN_Email, userEmail)
-        values.put(UserAccountEntry.COLUMN_Name, userName)
-        values.put(UserAccountEntry.COLUMN_Balance, currentBalance)
-    }
 
     fun insertTransfer(
         senderAccountID: String,
@@ -47,17 +24,24 @@ object DatabaseDataWorker {
         receiverAccountName: String,
         transferAmount: Int
     ) {
+        val db= databaseHelper.writableDatabase
+
         val values = ContentValues()
         values.put(TransferEntry.COLUMN_SENDER_NAME, senderAccountName)
         values.put(TransferEntry.COLUMN_SENDER_ID, senderAccountID)
         values.put(TransferEntry.COLUMN_RECEIVER_NAME, receiverAccountName)
         values.put(TransferEntry.COLUMN_RECEIVER_ID, receiverAccountID)
         values.put(TransferEntry.COLUMN_TRANSFER_AMOUNT, transferAmount)
+
+        db.insert(UserAccountEntry.TABLE_NAME,null,values)
+        db.close()
     }
 
-    fun getAllUsers(databaseHelper: BankOpenHelper): ArrayList<UserAccount> {
+    fun getAllUsers(): MutableLiveData<List<UserAccount>> {
+        val users = mutableListOf<UserAccount>()    //Empty list of users
 
-        val users = arrayListOf<UserAccount>()//Empty array of users
+        val liveUserResult= MutableLiveData<List<UserAccount>>()//liveResult to post value
+
         val db = databaseHelper.readableDatabase //open db for read information
 
         val columns = arrayOf(
@@ -94,12 +78,14 @@ object DatabaseDataWorker {
             users.add(UserAccount(id, name, email, accountIdPos, balancePos))
         }
         cursor.close() // close cursor
-        return users
+        liveUserResult.postValue(users)
+        return liveUserResult
     }
 
-    fun getTransferList(databaseHelper: BankOpenHelper): ArrayList<Transfer> {
+    fun getTransferList(): MutableLiveData<List<Transfer>>  {
+        val transfers = mutableListOf<Transfer>()
+        val liveResult= MutableLiveData<List<Transfer>>()
 
-        val transfers = arrayListOf<Transfer>()
         val db = databaseHelper.readableDatabase
 
         val columns = arrayOf(
@@ -139,10 +125,11 @@ object DatabaseDataWorker {
             transfers.add(Transfer(id, senderId, senderName, receiverId, receiverName, amount))
         }
         cursor.close()
-        return transfers
+        liveResult.postValue(transfers)
+        return liveResult
     }
 
-    fun updateUserBalance(databaseHelper: BankOpenHelper, userAccountId: String, amount: Int) {
+    fun updateUserBalance(userAccountId: String, amount: Int) {
 
         val db: SQLiteDatabase = databaseHelper.writableDatabase
         val values = ContentValues()

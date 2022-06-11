@@ -17,9 +17,9 @@ class BankDatabaseContract private constructor() // make non-creatable
         //Constant to CREATE TABLE course_info (course_id, course_title)
         const val SQL_CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
                 COLUMN_ID + " INTEGER PRIMARY KEY, " +
-                COLUMN_Name + " TEXT UNIQUE NOT NULL, " +
+                COLUMN_Name + " TEXT NOT NULL, " +
                 COLUMN_Email + " TEXT UNIQUE NOT NULL, " +
-                COLUMN_Account_ID + " TEXT NOT NULL, " +
+                COLUMN_Account_ID + " TEXT UNIQUE NOT NULL, " +
                 COLUMN_Balance + " TEXT NOT NULL)"
 
         const val SQL_DROP_TABLE = "DROP TABLE IF EXISTS $TABLE_NAME"
