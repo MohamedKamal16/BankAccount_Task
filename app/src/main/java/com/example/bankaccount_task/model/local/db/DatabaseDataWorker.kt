@@ -1,8 +1,8 @@
 package com.example.bankaccount_task.model.local.db
 
 import android.content.ContentValues
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.bankaccount_task.model.local.db.BankDatabaseContract.TransferEntry
 import com.example.bankaccount_task.model.local.db.BankDatabaseContract.UserAccountEntry
@@ -13,8 +13,7 @@ import javax.inject.Inject
 /*
  ADD simple to db fill table with some data
  */
-class DatabaseDataWorker @Inject constructor (var databaseHelper: BankOpenHelper) {
-
+class DatabaseDataWorker @Inject constructor(var databaseHelper: BankOpenHelper) {
 
 
     fun insertTransfer(
@@ -24,7 +23,7 @@ class DatabaseDataWorker @Inject constructor (var databaseHelper: BankOpenHelper
         receiverAccountName: String,
         transferAmount: Int
     ) {
-        val db= databaseHelper.writableDatabase
+        val db = databaseHelper.writableDatabase
 
         val values = ContentValues()
         values.put(TransferEntry.COLUMN_SENDER_NAME, senderAccountName)
@@ -33,14 +32,14 @@ class DatabaseDataWorker @Inject constructor (var databaseHelper: BankOpenHelper
         values.put(TransferEntry.COLUMN_RECEIVER_ID, receiverAccountID)
         values.put(TransferEntry.COLUMN_TRANSFER_AMOUNT, transferAmount)
 
-        db.insert(UserAccountEntry.TABLE_NAME,null,values)
+        db.insert(UserAccountEntry.TABLE_NAME, null, values)
         db.close()
     }
 
     fun getAllUsers(): MutableLiveData<List<UserAccount>> {
         val users = mutableListOf<UserAccount>()    //Empty list of users
 
-        val liveUserResult= MutableLiveData<List<UserAccount>>()//liveResult to post value
+        val liveUserResult = MutableLiveData<List<UserAccount>>()//liveResult to post value
 
         val db = databaseHelper.readableDatabase //open db for read information
 
@@ -69,22 +68,23 @@ class DatabaseDataWorker @Inject constructor (var databaseHelper: BankOpenHelper
         val accountIdPos = cursor.getColumnIndex(UserAccountEntry.COLUMN_Account_ID)
         val balancePos = cursor.getColumnIndex(UserAccountEntry.COLUMN_Balance)
 
+        cursor.moveToFirst()//move cursor to first raw
         while (cursor.moveToNext()) { //loop in db data and add it on array
             val id = cursor.getString(idPos)
             val name = cursor.getString(namePos)
             val email = cursor.getString(emailPos)
-            val accountIdPos = cursor.getString(accountIdPos)
-            val balancePos = cursor.getInt(balancePos)
-            users.add(UserAccount(id, name, email, accountIdPos, balancePos))
+            val accountId = cursor.getString(accountIdPos)
+            val balance = cursor.getInt(balancePos)
+            users.add(UserAccount(id, name, email, accountId, balance))
         }
         cursor.close() // close cursor
         liveUserResult.postValue(users)
         return liveUserResult
     }
 
-    fun getTransferList(): MutableLiveData<List<Transfer>>  {
+    fun getTransferList(): MutableLiveData<List<Transfer>> {
         val transfers = mutableListOf<Transfer>()
-        val liveResult= MutableLiveData<List<Transfer>>()
+        val liveResult = MutableLiveData<List<Transfer>>()
 
         val db = databaseHelper.readableDatabase
 
@@ -114,6 +114,7 @@ class DatabaseDataWorker @Inject constructor (var databaseHelper: BankOpenHelper
         val receiverPos = cursor.getColumnIndex(TransferEntry.COLUMN_RECEIVER_NAME)
         val amountPos = cursor.getColumnIndex(TransferEntry.COLUMN_TRANSFER_AMOUNT)
 
+        cursor.moveToFirst()
         while (cursor.moveToNext()) {
             val id = cursor.getString(idPos)
             val senderId = cursor.getString(senderIdPos)
@@ -138,10 +139,54 @@ class DatabaseDataWorker @Inject constructor (var databaseHelper: BankOpenHelper
         db.update(
             UserAccountEntry.TABLE_NAME,
             values,
-            "userAccountId = ?",
+            "user_id = ?",
             arrayOf(userAccountId)
         )//TODO Maybe cause error
         db.close()
+    }
+
+
+    fun getUserNameByAccountId(receiverAccountId: String): UserAccount? {
+        val db = databaseHelper.readableDatabase
+         var  user: UserAccount? =null
+
+      val columns = arrayOf(
+            UserAccountEntry.COLUMN_ID,
+            UserAccountEntry.COLUMN_Name,
+            UserAccountEntry.COLUMN_Email,
+            UserAccountEntry.COLUMN_Account_ID,
+            UserAccountEntry.COLUMN_Balance
+        )
+
+        val selection = UserAccountEntry.COLUMN_Account_ID + " = ? "
+        val selectionArgs = arrayOf(receiverAccountId)
+
+        val cursor = db.query(
+            UserAccountEntry.TABLE_NAME,
+            columns,
+            selection,
+            selectionArgs,
+            null,
+            null,
+            null
+        )
+
+        val idPos = cursor.getColumnIndex(UserAccountEntry.COLUMN_ID)
+        val namePos = cursor.getColumnIndex(UserAccountEntry.COLUMN_Name)
+        val emailPos = cursor.getColumnIndex(UserAccountEntry.COLUMN_Email)
+        val balancePos = cursor.getColumnIndex(UserAccountEntry.COLUMN_Balance)
+
+      if(cursor.moveToFirst()) {
+
+          val id = cursor.getString(idPos)
+          val name = cursor.getString(namePos)
+          val email = cursor.getString(emailPos)
+          val balance = cursor.getInt(balancePos)
+
+          user = UserAccount(id, name, email, receiverAccountId, balance)
+      }
+        cursor.close()
+        return user
     }
 
 
