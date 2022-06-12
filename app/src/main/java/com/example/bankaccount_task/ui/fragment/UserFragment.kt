@@ -4,44 +4,51 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import com.example.bankaccount_task.R
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bankaccount_task.databinding.FragmentUsersBinding
+import com.example.bankaccount_task.model.local.db.BankOpenHelper
+import com.example.bankaccount_task.model.local.db.DatabaseDataWorker
+import com.example.bankaccount_task.ui.adapter.UsersAdapter
 import com.example.bankaccount_task.ui.viewModel.UserViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class UserFragment : Fragment() {
 
     private var _binding: FragmentUsersBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    lateinit var userAdapter: UsersAdapter
+
+
+    private val viewModel: UserViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val galleryViewModel =
-            ViewModelProvider(this).get(UserViewModel::class.java)
-
         _binding = FragmentUsersBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        return root
+        return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btnNav()
+
+        viewModel.getUsers().observe(viewLifecycleOwner, Observer {
+            userAdapter = UsersAdapter(it)
+            setupRecyclerview()
+        })
+
     }
 
-    private fun btnNav() {
-        binding.btnAccount.setOnClickListener {
-            findNavController().navigate(R.id.accountFragment)
-        }
+    private fun setupRecyclerview() = binding.userRec.apply {
+        adapter = userAdapter
+        layoutManager = LinearLayoutManager(requireContext())
     }
 
     override fun onDestroyView() {
