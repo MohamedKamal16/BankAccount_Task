@@ -19,7 +19,11 @@
         android:id="@+id/accountFragment"
         android:name="com.example.bankaccount_task.ui.fragment.AccountFragment"
         android:label="fragment_accounts"
-        tools:layout="@layout/fragment_accounts" />
+        tools:layout="@layout/fragment_accounts" >
+        <action
+            android:id="@+id/action_accountFragment_to_transferFragment"
+            app:destination="@id/transferFragment" />
+    </fragment>
     <fragment
         android:id="@+id/userFragment"
         android:name="com.example.bankaccount_task.ui.fragment.UserFragment"
@@ -29,5 +33,10 @@
             android:id="@+id/action_userFragment_to_accountFragment"
             app:destination="@id/accountFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/transferFragment"
+        android:name="com.example.bankaccount_task.ui.fragment.TransferFragment"
+        android:label="transfer_fragment"
+        tools:layout="@layout/transfer_fragment" />
 
 </navigation>
