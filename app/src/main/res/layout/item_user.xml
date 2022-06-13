@@ -71,37 +71,37 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
             <TextView
-                android:id="@+id/tv_account"
+                android:id="@+id/tvAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView5"
-                app:layout_constraintStart_toStartOf="@+id/tv_email"
+                app:layout_constraintStart_toStartOf="@+id/tvBalance"
                 app:layout_constraintTop_toTopOf="@+id/textView5" />
 
             <TextView
-                android:id="@+id/tv_name"
+                android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView2"
-                app:layout_constraintStart_toStartOf="@+id/tv_email"
+                app:layout_constraintStart_toStartOf="@+id/tvEmail"
                 app:layout_constraintTop_toTopOf="@+id/textView2" />
 
             <TextView
-                android:id="@+id/tv_email"
+                android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView3"
-                app:layout_constraintStart_toStartOf="@+id/tv_balance"
+                app:layout_constraintStart_toStartOf="@+id/tvBalance"
                 app:layout_constraintTop_toTopOf="@+id/textView3" />
 
             <TextView
-                android:id="@+id/tv_balance"
+                android:id="@+id/tvBalance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"

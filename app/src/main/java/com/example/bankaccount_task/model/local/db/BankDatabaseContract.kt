@@ -42,10 +42,10 @@ class BankDatabaseContract private constructor() // make non-creatable
                 COLUMN_SENDER_ID + " TEXT NOT NULL, " +
                 COLUMN_RECEIVER_NAME + " TEXT NOT NULL, " +
                 COLUMN_RECEIVER_ID + " TEXT NOT NULL, " +
-                COLUMN_TRANSFER_AMOUNT + " TEXT NOT NULL)"
+                COLUMN_TRANSFER_AMOUNT + " REAL NOT NULL)"
 
 
-        const val SQL_DROP_TABLE = "DROP TABLE IF EXISTS ${UserAccountEntry.TABLE_NAME}"
+        const val SQL_DROP_TABLE = "DROP TABLE IF EXISTS $TABLE_NAME"
      //   const val SQL_Alter_TABLE = "ALTER TABLE IF EXISTS ${UserAccountEntry.TABLE_NAME}"
     }
 }

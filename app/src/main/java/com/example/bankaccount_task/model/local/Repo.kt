@@ -6,12 +6,12 @@ import javax.inject.Inject
 
 class Repo @Inject constructor(val worker: DatabaseDataWorker) {
 
-    fun insertTransfer(
+  fun insertTransfer(
         senderAccountID: String,
         senderAccountName: String,
         receiverAccountID: String,
         receiverAccountName: String,
-        transferAmount: Int
+        transferAmount: Double
     ) = worker.insertTransfer(
         senderAccountID,
         senderAccountName,
@@ -21,7 +21,7 @@ class Repo @Inject constructor(val worker: DatabaseDataWorker) {
     )
     fun getAllUsers()=worker.getAllUsers()
     fun getTransfers()=worker.getTransferList()
-    fun getUserNameByAccountId(accountId:String)=worker.getUserNameByAccountId(accountId)
+    fun getUserByAccountId(accountId:String)=worker.getUserByAccountId(accountId)
     fun updateBalance(userAccountId: String, amount: Int)=worker.updateUserBalance(userAccountId, amount)
 
 }

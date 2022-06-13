@@ -3,12 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidPlursight/BankAccount_Task/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.173" />
         <entry key="..\:/AndroidPlursight/BankAccount_Task/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/AndroidPlursight/BankAccount_Task/app/src/main/res/layout/app_bar_main.xml" value="0.2" />
         <entry key="..\:/AndroidPlursight/BankAccount_Task/app/src/main/res/layout/content_main.xml" value="0.22" />
+        <entry key="..\:/AndroidPlursight/BankAccount_Task/app/src/main/res/layout/fragment_accounts.xml" value="0.5" />
         <entry key="..\:/AndroidPlursight/BankAccount_Task/app/src/main/res/layout/fragment_gallery.xml" value="0.2" />
-        <entry key="..\:/AndroidPlursight/BankAccount_Task/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+        <entry key="..\:/AndroidPlursight/BankAccount_Task/app/src/main/res/layout/fragment_home.xml" value="0.33" />
+        <entry key="..\:/AndroidPlursight/BankAccount_Task/app/src/main/res/layout/fragment_users.xml" value="0.2" />
+        <entry key="..\:/AndroidPlursight/BankAccount_Task/app/src/main/res/layout/item_history_transfer.xml" value="0.5" />
+        <entry key="..\:/AndroidPlursight/BankAccount_Task/app/src/main/res/layout/item_user.xml" value="0.75" />
         <entry key="..\:/AndroidPlursight/BankAccount_Task/app/src/main/res/layout/nav_header_main.xml" value="0.2" />
+        <entry key="..\:/AndroidPlursight/BankAccount_Task/app/src/main/res/layout/transfer_dialog.xml" value="0.33" />
+        <entry key="..\:/AndroidPlursight/BankAccount_Task/app/src/main/res/layout/transfer_fragment.xml" value="0.33268101761252444" />
+        <entry key="..\:/AndroidPlursight/BankAccount_Task/app/src/main/res/layout/transfer_history_fragment_fragment.xml" value="0.2" />
       </map>
     </option>
   </component>
