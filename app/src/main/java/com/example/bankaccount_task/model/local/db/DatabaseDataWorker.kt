@@ -16,12 +16,12 @@ import javax.inject.Inject
 class DatabaseDataWorker @Inject constructor(var databaseHelper: BankOpenHelper) {
 
 
-    fun insertTransfer(
+   fun insertTransfer(
         senderAccountID: String,
         senderAccountName: String,
         receiverAccountID: String,
         receiverAccountName: String,
-        transferAmount: Int
+        transferAmount: Double
     ) {
         val db = databaseHelper.writableDatabase
 
@@ -32,7 +32,7 @@ class DatabaseDataWorker @Inject constructor(var databaseHelper: BankOpenHelper)
         values.put(TransferEntry.COLUMN_RECEIVER_ID, receiverAccountID)
         values.put(TransferEntry.COLUMN_TRANSFER_AMOUNT, transferAmount)
 
-        db.insert(UserAccountEntry.TABLE_NAME, null, values)
+        db.insert(TransferEntry.TABLE_NAME, null, values)
         db.close()
     }
 
@@ -68,7 +68,6 @@ class DatabaseDataWorker @Inject constructor(var databaseHelper: BankOpenHelper)
         val accountIdPos = cursor.getColumnIndex(UserAccountEntry.COLUMN_Account_ID)
         val balancePos = cursor.getColumnIndex(UserAccountEntry.COLUMN_Balance)
 
-        cursor.moveToFirst()//move cursor to first raw
         while (cursor.moveToNext()) { //loop in db data and add it on array
             val id = cursor.getString(idPos)
             val name = cursor.getString(namePos)
@@ -114,14 +113,14 @@ class DatabaseDataWorker @Inject constructor(var databaseHelper: BankOpenHelper)
         val receiverPos = cursor.getColumnIndex(TransferEntry.COLUMN_RECEIVER_NAME)
         val amountPos = cursor.getColumnIndex(TransferEntry.COLUMN_TRANSFER_AMOUNT)
 
-        cursor.moveToFirst()
+       // cursor.moveToFirst()
         while (cursor.moveToNext()) {
             val id = cursor.getString(idPos)
             val senderId = cursor.getString(senderIdPos)
             val senderName = cursor.getString(senderNamePos)
             val receiverId = cursor.getString(receiverIdPos)
             val receiverName = cursor.getString(receiverPos)
-            val amount = cursor.getInt(amountPos)
+            val amount = cursor.getDouble(amountPos)
 
             transfers.add(Transfer(id, senderId, senderName, receiverId, receiverName, amount))
         }
@@ -146,7 +145,7 @@ class DatabaseDataWorker @Inject constructor(var databaseHelper: BankOpenHelper)
     }
 
 
-    fun getUserNameByAccountId(receiverAccountId: String): UserAccount? {
+    fun getUserByAccountId(receiverAccountId: String): UserAccount? {
         val db = databaseHelper.readableDatabase
          var  user: UserAccount? =null
 
@@ -177,7 +176,6 @@ class DatabaseDataWorker @Inject constructor(var databaseHelper: BankOpenHelper)
         val balancePos = cursor.getColumnIndex(UserAccountEntry.COLUMN_Balance)
 
       if(cursor.moveToFirst()) {
-
           val id = cursor.getString(idPos)
           val name = cursor.getString(namePos)
           val email = cursor.getString(emailPos)
@@ -188,6 +186,8 @@ class DatabaseDataWorker @Inject constructor(var databaseHelper: BankOpenHelper)
         cursor.close()
         return user
     }
+
+
 
 
 }

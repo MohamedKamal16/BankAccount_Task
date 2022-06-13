@@ -6,7 +6,7 @@ class Transfer(
     val senderAccountName: String,
     val ReceiverAccountID: String,
     val ReceiverAccountName: String,
-    val TransferAmount: Int
+    val TransferAmount: Double
 
     ) {
     override fun toString(): String {

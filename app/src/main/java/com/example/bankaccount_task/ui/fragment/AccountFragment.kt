@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.bankaccount_task.R
 import com.example.bankaccount_task.databinding.FragmentAccountsBinding
-import com.example.bankaccount_task.ui.viewModel.AccountViewModel
 import com.example.bankaccount_task.utility.Constant.BALANCE
 import com.example.bankaccount_task.utility.Constant.EMAIL
 import com.example.bankaccount_task.utility.Constant.ID
