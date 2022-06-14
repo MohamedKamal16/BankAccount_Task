@@ -57,6 +57,10 @@ class TransferFragment : Fragment() {
 
         getAllUsers()
         with(binding) {
+            tvPageName.text=getString(R.string.tr)
+            back.setOnClickListener {
+                findNavController().popBackStack()
+            }
             tvName.text = senderName
             tvAccount.text = senderAccountId
             tvBalance.text = senderBalance.toString()

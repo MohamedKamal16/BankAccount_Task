@@ -81,9 +81,9 @@ class DatabaseDataWorker @Inject constructor(var databaseHelper: BankOpenHelper)
         return liveUserResult
     }
 
-    fun getTransferList(): MutableLiveData<List<Transfer>> {
-        val transfers = mutableListOf<Transfer>()
-        val liveResult = MutableLiveData<List<Transfer>>()
+    fun getTransferList(): MutableLiveData<ArrayList<Transfer>> {
+        val transfers = arrayListOf<Transfer>()
+        val liveResult = MutableLiveData<ArrayList<Transfer>>()
 
         val db = databaseHelper.readableDatabase
 
@@ -140,7 +140,7 @@ class DatabaseDataWorker @Inject constructor(var databaseHelper: BankOpenHelper)
             values,
             "user_id = ?",
             arrayOf(userAccountId)
-        )//TODO Maybe cause error
+        )
         db.close()
     }
 
@@ -186,6 +186,14 @@ class DatabaseDataWorker @Inject constructor(var databaseHelper: BankOpenHelper)
         cursor.close()
         return user
     }
+    fun deleteTransferHistory(id: String){
+        val db=databaseHelper.writableDatabase
+        db.delete(TransferEntry.TABLE_NAME,
+            TransferEntry.COLUMN_ID +" = ? ",
+            arrayOf(id) )
+    }
+
+
 
 
 

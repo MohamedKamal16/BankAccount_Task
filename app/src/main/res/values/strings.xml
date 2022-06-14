@@ -29,4 +29,9 @@
     <string name="success">Success</string>
     <string name="your_action_preformed_successfully">Your action preformed successfully</string>
     <string name="ok">OK</string>
+    <string name="back">Back</string>
+    <string name="users">Users</string>
+    <string name="tr">Transfer</string>
+    <string name="tr_history">Transfer History</string>
+    <string name="user_account">User Account</string>
 </resources>

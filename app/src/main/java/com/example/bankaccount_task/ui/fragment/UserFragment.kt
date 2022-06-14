@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bankaccount_task.R
 import com.example.bankaccount_task.databinding.FragmentUsersBinding
 import com.example.bankaccount_task.model.local.db.BankOpenHelper
 import com.example.bankaccount_task.model.local.db.DatabaseDataWorker
@@ -38,6 +40,12 @@ class UserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        with(binding){
+            tvPageName.text=getString(R.string.users)
+            back.setOnClickListener {
+                findNavController().navigate(R.id.action_userFragment_to_nav_home)
+            }
+        }
 
         viewModel.getUsers().observe(viewLifecycleOwner, Observer {
             userAdapter = UsersAdapter(it)
