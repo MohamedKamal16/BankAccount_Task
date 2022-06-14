@@ -36,6 +36,12 @@ class AccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding){
+            tvPageName.text=getString(R.string.user_account)
+
+            back.setOnClickListener {
+                findNavController().popBackStack()
+            }
+
             tvName.text=name
             tvAccount.text=accountId
             tvBalance.text=balance.toString()

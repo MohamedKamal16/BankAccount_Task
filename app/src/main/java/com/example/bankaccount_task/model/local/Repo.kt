@@ -4,7 +4,7 @@ import com.example.bankaccount_task.model.local.db.DatabaseDataWorker
 import com.example.bankaccount_task.model.local.entity.UserAccount
 import javax.inject.Inject
 
-class Repo @Inject constructor(val worker: DatabaseDataWorker) {
+class Repo @Inject constructor(private val worker: DatabaseDataWorker) {
 
   fun insertTransfer(
         senderAccountID: String,
@@ -23,5 +23,5 @@ class Repo @Inject constructor(val worker: DatabaseDataWorker) {
     fun getTransfers()=worker.getTransferList()
     fun getUserByAccountId(accountId:String)=worker.getUserByAccountId(accountId)
     fun updateBalance(userAccountId: String, amount: Int)=worker.updateUserBalance(userAccountId, amount)
-
+    fun deleteTransferHistory(id: String)= worker.deleteTransferHistory(id)
 }

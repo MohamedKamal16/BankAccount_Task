@@ -1,6 +1,6 @@
 package com.example.bankaccount_task.model.local.entity
 
-class Transfer(
+data class Transfer(
     val id: String,
     val senderAccountID: String,
     val senderAccountName: String,
@@ -8,8 +8,4 @@ class Transfer(
     val ReceiverAccountName: String,
     val TransferAmount: Double
 
-    ) {
-    override fun toString(): String {
-        return "id: $id, senderAccountID: $senderAccountID, senderAccountName: $senderAccountName,TransferAmount: $TransferAmount,ReceiverAccountID: $ReceiverAccountID,ReceiverAccountName: $ReceiverAccountName"
-    }
-}
+    )
